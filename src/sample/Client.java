@@ -11,22 +11,21 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import static java.lang.System.nanoTime;
 
 public class Client {
-    private ArrayList<File> files = new ArrayList<>();
-    private long time;
-    private String name;
+    private final ArrayList<File> files = new ArrayList<>();
+    private final long time;
+    private final String name;
     private static final int MAX_FILES = 3;
 
     Client(String name) {
         this.time = nanoTime();
         this.name = name;
         Random random = new Random();
-        Integer filesCount = 1 + random.nextInt(MAX_FILES);
+        int filesCount = 1 + random.nextInt(MAX_FILES);
         for (int i = 0; i < filesCount; i++) {
             this.files.add(new File());
         }
@@ -69,14 +68,14 @@ public class Client {
             fileName.setAlignment(Pos.CENTER);
             fileName.setContentDisplay(ContentDisplay.CENTER);
             fileName.setLayoutX(0.0);
-            Double Y1 = 17.0 * fileNumber++;
+            double Y1 = 17.0 * fileNumber++;
             fileName.setLayoutY(Y1);
             fileName.setPrefWidth(80.0);
             fileName.setPrefHeight(17.0);
 
             ProgressBar progressBar = new ProgressBar(file.getProgress());
             progressBar.setLayoutX(5.0);
-            Double Y2 = 17.0 * fileNumber++;
+            double Y2 = 17.0 * fileNumber++;
             progressBar.setLayoutY(Y2);
             progressBar.setPrefWidth(80.0);
             progressBar.setPrefHeight(17.0);
