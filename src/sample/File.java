@@ -1,12 +1,10 @@
 package sample;
 
-import javafx.scene.layout.VBox;
-
 import java.util.Random;
 
 public class File {
-    private Double progress;
-    private Integer size;
+    private final Double progress;
+    private final Integer size;
 
     public File() {
         Random random = new Random();
