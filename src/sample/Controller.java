@@ -30,7 +30,6 @@ public class Controller implements Initializable {
     public HBox clientsContainer;
 
     public void addNewClient(ActionEvent actionEvent) {
-        System.out.println(actionEvent);
         this.clientNumber++;
         Client client = new Client("client" + this.clientNumber);
         this.clients.add(client);
