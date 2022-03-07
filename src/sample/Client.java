@@ -15,19 +15,30 @@ import java.util.Random;
 public class Client {
     public final static int MAX_FILES = 5;
     private final long id = GenID.getNext();
-    private final long time = new GregorianCalendar().getTime().getTime();
+    private final long time;
     private final int file1;
     private final int file2;
     private final int file3;
     private final int file4;
     private final int file0;
 
-    public Client(int file1, int file2, int file3, int file4, int file0) {
+    public Client(long time, int file1, int file2, int file3, int file4, int file0) {
+        this.time = time;
         this.file1 = file1;
         this.file2 = file2;
         this.file3 = file3;
         this.file4 = file4;
         this.file0 = file0;
+    }
+
+    public Client() {
+        Random random = new Random();
+        file0 = random.nextInt(10000);
+        file1 = random.nextInt(10000);
+        file2 = random.nextInt(10000);
+        file3 = random.nextInt(10000);
+        file4 = random.nextInt(10000);
+        this.time = new GregorianCalendar().getTime().getTime();
     }
 
     public long getId() {
@@ -58,14 +69,6 @@ public class Client {
         return time;
     }
 
-    public Client() {
-        Random random = new Random();
-            file1 = random.nextInt(10000);
-            file2 = random.nextInt(10000);
-            file3 = random.nextInt(10000);
-            file4 = random.nextInt(10000);
-            file0 = random.nextInt(10000);
-    }
 
     public VBox render() {
         VBox clientLayout = new VBox();

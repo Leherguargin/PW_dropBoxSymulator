@@ -31,7 +31,13 @@ import static java.lang.Thread.sleep;
 public class Main extends Application {
 
     private final TableView<Client> tableView = new TableView<>();
-    private final ObservableList<Client> clients = FXCollections.observableArrayList();
+    private final ObservableList<Client> clients = FXCollections.observableArrayList(
+            new Client(new GregorianCalendar().getTime().getTime(), 10000, 10000, 10000, 10000, 10000),
+            new Client(new GregorianCalendar().getTime().getTime(), 10000, 10000, 10000, 10000, 10000),
+            new Client(new GregorianCalendar().getTime().getTime() + 10000, 10000, 10000, 10000, 10000, 10000),
+            new Client(new GregorianCalendar().getTime().getTime(), 1, 1, 1, 1, 1),
+            new Client(new GregorianCalendar().getTime().getTime() + 100, 1, 1, 1, 1, 1)
+    );
     private final SimpleStringProperty[] uploading = {
             new SimpleStringProperty(" - "),
             new SimpleStringProperty(" - "),
@@ -122,14 +128,14 @@ public class Main extends Application {
         Client client = this.clients
                 .stream().max((c1, c2) -> {
                     //tutaj liczymy priorytet
-                    int c1prior = c1.getFile0();
-                    int c2prior = c2.getFile0();
                     long now = new GregorianCalendar().getTime().getTime();
-                    System.out.printf("%d %d %d %d\n", c1prior, c2prior, now - c1.getTime(), now - c2.getTime());
-                    return c2prior - c1prior;
+                    long c1prior = c1.getFile0() + now - c1.getTime();
+                    long c2prior = c2.getFile0() + now - c2.getTime();
+                    return (int) (c2prior - c1prior);
                 })
                 .orElseThrow(NoSuchElementException::new);
 
+        System.out.println(client.getId());
         this.clientsHistory.add(client);
         this.clients.remove(client);
         return client;
