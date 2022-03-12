@@ -9,36 +9,59 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 
-import java.util.GregorianCalendar;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Random;
 
 public class Client {
     public final static int MAX_FILES = 5;
     private final long id = GenID.getNext();
-    private final long time;
+    private final LocalTime time;
+    private long waitingTime;
     private final int file1;
     private final int file2;
     private final int file3;
     private final int file4;
     private final int file0;
+    private double prior = 0;
 
-    public Client(long time, int file1, int file2, int file3, int file4, int file0) {
+    public Client(LocalTime time, int file1, int file2, int file3, int file4, int file0) {
         this.time = time;
         this.file1 = file1;
         this.file2 = file2;
         this.file3 = file3;
         this.file4 = file4;
         this.file0 = file0;
+        getWaitingTime();
     }
 
     public Client() {
         Random random = new Random();
-        file0 = random.nextInt(10000);
-        file1 = random.nextInt(10000);
-        file2 = random.nextInt(10000);
-        file3 = random.nextInt(10000);
-        file4 = random.nextInt(10000);
-        this.time = new GregorianCalendar().getTime().getTime();
+        final int MAX_SIZE = 10_000;
+        file0 = random.nextInt(MAX_SIZE);
+        file1 = random.nextInt(MAX_SIZE);
+        file2 = random.nextInt(MAX_SIZE);
+        file3 = random.nextInt(MAX_SIZE);
+        file4 = random.nextInt(MAX_SIZE);
+        this.time = LocalTime.now();
+        this.waitingTime = 0;
+    }
+
+    public long getWaitingTime() {
+        this.waitingTime = this.time.until(LocalTime.now(), ChronoUnit.SECONDS);
+        return waitingTime;
+    }
+
+    public synchronized void updateWaitingTime() {
+        this.waitingTime = this.time.until(LocalTime.now(), ChronoUnit.SECONDS);
+    }
+
+    public double getPrior() {
+        return prior;
+    }
+
+    public void setPrior(double prior) {
+        this.prior = prior;
     }
 
     public long getId() {
@@ -64,11 +87,6 @@ public class Client {
     public int getFile0() {
         return file0;
     }
-
-    public long getTime() {
-        return time;
-    }
-
 
     public VBox render() {
         VBox clientLayout = new VBox();
