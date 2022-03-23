@@ -65,15 +65,15 @@ public class Main extends Application {
             Client client = new Client();
             clients.add(client);
         });
-        Button showChart = new Button("show chart");
-        showChart.setOnAction(this::chartWindow);
+//        Button showChart = new Button("show chart");
+//        showChart.setOnAction(this::chartWindow);
         Button startSimulation = new Button("Start");
         startSimulation.setOnAction(this::simulationHandler);
         topLayout.setSpacing(10.0);
         for (int i = 0; i < LICZBA_DYSKOW; i++) {
             topLayout.getChildren().add(generateDisk("disk " + i, uploading.get(i)));
         }
-        topLayout.getChildren().addAll(addClientButton, startSimulation, showChart);
+        topLayout.getChildren().addAll(addClientButton, startSimulation/*, showChart*/);
 
         tableView.setEditable(true);
 
@@ -154,7 +154,7 @@ public class Main extends Application {
                             Platform.runLater(() -> {
                                 this.uploading.get(finalI).set(Long.toString(client.getId()));
                             });
-                            sleep(client.getFile0());
+                            sleep(client.getFile0() + client.getFile1() + client.getFile2() + client.getFile3() + client.getFile4());
                         } catch (InterruptedException ex) {
                             ex.printStackTrace();
                         } catch (NoSuchElementException noSuchElementException) {
